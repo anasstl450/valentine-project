@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Valentine Proposal</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe6f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #ccc;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Safae, Will you be my Valentine? ❤️</h2>
+    <button id="yesBtn" onclick="goToSuccess()">Yes 💖</button>
+    <button id="noBtn">No 😢</button>
+</div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+
+    let posX = 0;
+    let posY = 0;
+
+    document.addEventListener("mousemove", function(e) {
+
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        const rect = noBtn.getBoundingClientRect();
+
+        const btnX = rect.left + rect.width / 2;
+        const btnY = rect.top + rect.height / 2;
+
+        const distance = Math.sqrt(
+            (mouseX - btnX) ** 2 + (mouseY - btnY) ** 2
+        );
+
+        if (distance < 120) {
+
+            let moveX = (btnX - mouseX) * 0.3;
+            let moveY = (btnY - mouseY) * 0.3;
+
+            posX += moveX;
+            posY += moveY;
+
+            // 🔒 Keep inside visible screen
+            const maxX = window.innerWidth - rect.width - 20;
+            const maxY = window.innerHeight - rect.height - 20;
+
+            posX = Math.max(-rect.left + 10, Math.min(posX, maxX - rect.left));
+            posY = Math.max(-rect.top + 10, Math.min(posY, maxY - rect.top));
+
+            noBtn.style.transform = `translate(${posX}px, ${posY}px)`;
+        }
+    });
+
+    function goToSuccess() {
+        window.location.href = "success.html";
+    }
+</script>
+
+
+
+
+</body>
+</html>
+
